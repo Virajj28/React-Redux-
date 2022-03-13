@@ -1,3 +1,7 @@
+// import redux from 'redux'; with file proj.
+const redux = require('redux') // node module
+const createStore = redux.createStore;
+
 const Buy_Cake= 'Buy_Cake';
 
 //action creator
@@ -23,3 +27,11 @@ const reducer = (state = initialState, action) => {
         default: return state;
     }
 }
+
+const store = createStore(reducer); // 1st responsibility
+console.log('Intial State', store.getState()) //2nd
+const unsubscribe = store.subscribe(() => console.log('Update State', store.getState())) //4th
+store.dispatch(buyCake()) //3rd
+store.dispatch(buyCake())
+store.dispatch(buyCake())
+unsubscribe() //5th
