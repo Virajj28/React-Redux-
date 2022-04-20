@@ -1,7 +1,12 @@
 // import redux from 'redux'; with file proj.
 const redux = require('redux') // node module
+const reduxLogger = require('redux-logger')
+
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
+// Middlewares
+const applyMiddleware = redux.applyMiddleware;
+const logger = reduxLogger.createLogger()
 
 const BUY_CAKE= 'BUY_CAKE';
 const BUY_ICECREAM= 'BUY_ICECREAM'
@@ -77,10 +82,12 @@ const rootReducer = combineReducers({
     iceCream: iceCreamReducer
 })
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 // const store = createStore(reducer); // Just for single reducers 1st responsibility
 console.log('Intial State', store.getState()) //2nd
-const unsubscribe = store.subscribe(() => console.log('Update State', store.getState())) //4th
+const unsubscribe = store.subscribe(() => 
+                    // console.log('Update State', store.getState())
+                    {}) //4th
 store.dispatch(buyCake()) //3rd
 store.dispatch(buyCake())
 store.dispatch(buyCake())
